@@ -44,10 +44,10 @@ dependencies:
   introduction_screen: ^3.0.2
   flutter_zoom_drawer: ^3.0.3
   loop_page_view: ^1.2.0
-  tiktoklikescroller: ^0.2.3
   image_picker: ^0.8.5+3
   sqflite: ^2.0.3+1
   path_provider: ^2.0.11
+  provider: ^6.0.3
 
 
 
@@ -118,10 +118,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+      - family: JosefinSans
+        fonts:
+           - asset: assets/font/JosefinSans-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
