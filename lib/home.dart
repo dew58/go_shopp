@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:go_shop/cards.dart';
 import 'package:go_shop/cart.dart';
+import 'package:go_shop/profile.dart';
 import 'package:go_shop/seeall.dart';
+import 'package:go_shop/ui%20history.dart';
 import 'package:go_shop/wishlist.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:provider/provider.dart';
@@ -53,9 +55,9 @@ class _MainHomeState extends State<MainHome> {
       case 3:
         return Cart();
       case 4:
-        return Body();
+        return uihistory();
       case 5:
-        return Body();
+        return profi();
       case 6:
         return Body();
       default:
@@ -78,140 +80,140 @@ class _DrawerState extends State<Drawer> {
     return Scaffold(
       backgroundColor: Color(0xFF432267),
 
-        body: Stack(
-          children: [
-            Container(
-              width:MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
+      body: Stack(
+        children: [
+          Container(
+            width:MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+          ),
+          Positioned(
+            top: 30,
+            child: Column(
+              children: [
+                SvgPicture.asset("assets/icons/path-11.svg",color: Color(0xFFE99000),height: 60,width: 60,),
+                Container(
+                  margin: EdgeInsets.only(top: 17),
+                  child: Text("Nada Mohmmed",style: TextStyle(color: Color(0xFFFEFEFE),fontSize: 18),textAlign: TextAlign.center,),),
+                Text("nada.mohamed@example.com",style: TextStyle(color: Color(0xFFE99000),fontSize: 14),textAlign: TextAlign.center,),
+              ],
             ),
-            Positioned(
-              top: 30,
-              child: Column(
-                children: [
-                  SvgPicture.asset("assets/icons/path-11.svg",color: Color(0xFFE99000),height: 60,width: 60,),
-                  Container(
-                    margin: EdgeInsets.only(top: 17),
-                    child: Text("Nada Mohmmed",style: TextStyle(color: Color(0xFFFEFEFE),fontSize: 18),textAlign: TextAlign.center,),),
-                  Text("nada.mohamed@example.com",style: TextStyle(color: Color(0xFFE99000),fontSize: 14),textAlign: TextAlign.center,),
-                ],
-              ),
-            ),
-            Positioned(
-               top: MediaQuery.of(context).size.height*0.2,
-               child: Container(
-                 height: MediaQuery.of(context).size.height*0.57,
-                 width: MediaQuery.of(context).size.width*0.4,
-                 child: Column(
-                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                   crossAxisAlignment: CrossAxisAlignment.stretch,
-                   children: [
-                     Container(
-                       margin: EdgeInsets.only(left: 20, bottom: 12),
-                       child: InkWell(
-                         onTap: (){
-                           widget.setIndex(1);
-                         },
-                         child: Row(
-                           children: [
-                             SvgPicture.asset("assets/icons/home-1.svg",color: Color(0xFFE99000)),
-                             SizedBox(width: 12,),
-                             Text('Home',style: TextStyle(color: Color(0xFFFEFEFE),fontWeight: FontWeight.bold),),
-                           ],
-                         ),
-                       )
-                     ),
-                     Container(
-                       margin: EdgeInsets.only(left: 20, bottom: 12),
-                       child:InkWell(
-                         onTap: (){
-                           widget.setIndex(2);
-                         },
-                         child:  Row(
-                           children: [
-                             SvgPicture.asset("assets/icons/loved.svg",color: Color(0xFFE99000)),
-                             SizedBox(width: 12,),
-                             Text('Wishlist',style: TextStyle(color: Color(0xFFFEFEFE),fontWeight: FontWeight.bold),),
-                           ],
-                         ),
-                       ),),
-                     Container(
-                       margin: EdgeInsets.only(left: 20, bottom: 12),
-                       child: InkWell(
-                         onTap: (){
-                           widget.setIndex(3);
-                         },
-                         child: Row(
-                           children: [
-                             SvgPicture.asset("assets/icons/shopping-bag-1.svg",color: Color(0xFFE99000)),
-                             SizedBox(width: 12,),
-                             Text('Cart',style: TextStyle(color: Color(0xFFFEFEFE),fontWeight: FontWeight.bold),),
-                           ],
-                         ),
-                       )),
-                     Container(
-                       margin: EdgeInsets.only(left: 20, bottom: 12),
-                       child: InkWell(
-                         onTap: (){
-                           widget.setIndex(4);
-                         },
-                         child: Row(
-                           children: [
-                             SvgPicture.asset("assets/icons/path-10.svg",color: Color(0xFFE99000)),
-                             SizedBox(width: 12,),
-                             Text('Order History',style: TextStyle(color: Color(0xFFFEFEFE),fontWeight: FontWeight.bold),),
-                           ],
-                         ),
-                       )),
-                     Container(
-                       margin: EdgeInsets.only(left: 20, bottom: 12),
-                       child: InkWell(
-                         onTap: (){
-                           widget.setIndex(5);
-                         },
-                         child: Row(
-                           children: [
-                             SvgPicture.asset("assets/icons/path-11.svg",color: Color(0xFFE99000)),
-                             SizedBox(width: 12,),
-                             Text('Profile',style: TextStyle(color: Color(0xFFFEFEFE),fontWeight: FontWeight.bold),),
-                           ],
-                         ),
-                       ),),
-                     Container(
-                       margin: EdgeInsets.only(left: 20, bottom: 12),
-                       child: InkWell(
-                         onTap: (){
-                           widget.setIndex(6);;
-                         },
-                         child: Row(
-                           children: [
-                             SvgPicture.asset("assets/icons/settings.svg",color: Color(0xFFE99000)),
-                             SizedBox(width: 12,),
-                             Text('App Setting',style: TextStyle(color: Color(0xFFFEFEFE),fontWeight: FontWeight.bold),),
-                           ],
-                         ),
-                       ),),
-                     Container(
-                       margin: EdgeInsets.only(left: 20, bottom: 12),
-                       child: InkWell(
-                         onTap: (){
-                           widget.setIndex(7);
-                         },
-                         child: Row(
-                           children: [
-                             SvgPicture.asset("assets/icons/settings.svg",color: Color(0xFFE99000)),
-                             SizedBox(width: 12,),
-                             Text('Help & FAQs',style: TextStyle(color: Color(0xFFFEFEFE),fontWeight: FontWeight.bold),),
-                           ],
-                         ),
-                       ),),
+          ),
+          Positioned(
+              top: MediaQuery.of(context).size.height*0.2,
+              child: Container(
+                height: MediaQuery.of(context).size.height*0.57,
+                width: MediaQuery.of(context).size.width*0.4,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Container(
+                        margin: EdgeInsets.only(left: 20, bottom: 12),
+                        child: InkWell(
+                          onTap: (){
+                            widget.setIndex(1);
+                          },
+                          child: Row(
+                            children: [
+                              SvgPicture.asset("assets/icons/home-1.svg",color: Color(0xFFE99000)),
+                              SizedBox(width: 12,),
+                              Text('Home',style: TextStyle(color: Color(0xFFFEFEFE),fontWeight: FontWeight.bold),),
+                            ],
+                          ),
+                        )
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 20, bottom: 12),
+                      child:InkWell(
+                        onTap: (){
+                          widget.setIndex(2);
+                        },
+                        child:  Row(
+                          children: [
+                            SvgPicture.asset("assets/icons/loved.svg",color: Color(0xFFE99000)),
+                            SizedBox(width: 12,),
+                            Text('Wishlist',style: TextStyle(color: Color(0xFFFEFEFE),fontWeight: FontWeight.bold),),
+                          ],
+                        ),
+                      ),),
+                    Container(
+                        margin: EdgeInsets.only(left: 20, bottom: 12),
+                        child: InkWell(
+                          onTap: (){
+                            widget.setIndex(3);
+                          },
+                          child: Row(
+                            children: [
+                              SvgPicture.asset("assets/icons/shopping-bag-1.svg",color: Color(0xFFE99000)),
+                              SizedBox(width: 12,),
+                              Text('Cart',style: TextStyle(color: Color(0xFFFEFEFE),fontWeight: FontWeight.bold),),
+                            ],
+                          ),
+                        )),
+                    Container(
+                        margin: EdgeInsets.only(left: 20, bottom: 12),
+                        child: InkWell(
+                          onTap: (){
+                            widget.setIndex(4);
+                          },
+                          child: Row(
+                            children: [
+                              SvgPicture.asset("assets/icons/path-10.svg",color: Color(0xFFE99000)),
+                              SizedBox(width: 12,),
+                              Text('Order History',style: TextStyle(color: Color(0xFFFEFEFE),fontWeight: FontWeight.bold),),
+                            ],
+                          ),
+                        )),
+                    Container(
+                      margin: EdgeInsets.only(left: 20, bottom: 12),
+                      child: InkWell(
+                        onTap: (){
+                          widget.setIndex(5);
+                        },
+                        child: Row(
+                          children: [
+                            SvgPicture.asset("assets/icons/path-11.svg",color: Color(0xFFE99000)),
+                            SizedBox(width: 12,),
+                            Text('Profile',style: TextStyle(color: Color(0xFFFEFEFE),fontWeight: FontWeight.bold),),
+                          ],
+                        ),
+                      ),),
+                    Container(
+                      margin: EdgeInsets.only(left: 20, bottom: 12),
+                      child: InkWell(
+                        onTap: (){
+                          widget.setIndex(6);;
+                        },
+                        child: Row(
+                          children: [
+                            SvgPicture.asset("assets/icons/settings.svg",color: Color(0xFFE99000)),
+                            SizedBox(width: 12,),
+                            Text('App Setting',style: TextStyle(color: Color(0xFFFEFEFE),fontWeight: FontWeight.bold),),
+                          ],
+                        ),
+                      ),),
+                    Container(
+                      margin: EdgeInsets.only(left: 20, bottom: 12),
+                      child: InkWell(
+                        onTap: (){
+                          widget.setIndex(7);
+                        },
+                        child: Row(
+                          children: [
+                            SvgPicture.asset("assets/icons/settings.svg",color: Color(0xFFE99000)),
+                            SizedBox(width: 12,),
+                            Text('Help & FAQs',style: TextStyle(color: Color(0xFFFEFEFE),fontWeight: FontWeight.bold),),
+                          ],
+                        ),
+                      ),),
 
 
-                ],
-              ),
-            )),
-            Positioned(
-              bottom: 30,
-              child:Container(
+                  ],
+                ),
+              )),
+          Positioned(
+            bottom: 30,
+            child:Container(
               margin: EdgeInsets.only(left: 20, bottom: 12),
               child: Row(
                 children: [
@@ -221,9 +223,9 @@ class _DrawerState extends State<Drawer> {
                 ],
               ),
             ),),
-          ],
+        ],
 
-        ),
+      ),
     );
   }
 
@@ -231,7 +233,7 @@ class _DrawerState extends State<Drawer> {
 
 
 class Body extends StatelessWidget {
-   Body({Key? key}) : super(key: key);
+  Body({Key? key}) : super(key: key);
 
   List <String> offers =["assets/5a6561119db533beb718347ff9c8b81d.jpg",
     "assets/ab640b2dfa42adac718ab6e5f40d99.jpg",
@@ -239,7 +241,7 @@ class Body extends StatelessWidget {
 
   //final GlobalKey<ScaffoldState> _key = GlobalKey();
 
-   bool ispressed = false;
+  bool ispressed = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -266,12 +268,12 @@ class Body extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           IconButton( icon: SvgPicture.asset("assets/icons/menu.svg"),
-                         onPressed: () => ZoomDrawer.of(context)!.toggle()),
+                              onPressed: () => ZoomDrawer.of(context)!.toggle()),
                           Text ("Home",style: TextStyle(color: Color(0xFFFEFEFE),fontSize: 20)),
                           IconButton( icon:SvgPicture.asset("assets/icons/shopping-bag.svg"),
-                           onPressed: () {
-                             Navigator.push(context, scaleIn(Cart()));
-                           },),
+                            onPressed: () {
+                              Navigator.push(context, scaleIn(Cart()));
+                            },),
                         ],
                       ),
                     ),
@@ -491,33 +493,33 @@ class Body extends StatelessWidget {
                                 Positioned(
                                     right: 5,
                                     child: Container(
-                                  height: 50,
-                                  width: 50,
-                                  alignment: AlignmentDirectional.topEnd,
-                                  margin: EdgeInsets.only(top: 5,right: 5),
-                                  child: CircleAvatar(
-                                      backgroundColor:  popular.popular[index].loved? Color(0xFF432267):Color(0xFFFEFEFE),
-                                      child:  Consumer<Myfav>(builder: (context,fav,child){
-                                        return IconButton(
-                                            onPressed: () {
-                                              if (!ispressed){
-                                                fav.addtofav(popular.popular[index].path, true);
-                                                popular.change(index,true);
-                                                ispressed=true;
-                                              }
-                                              else{
-                                                fav.removfan(index);
-                                                popular.change(index,false);
-                                                ispressed=false;
-                                              }
-                                            },
-                                            icon:popular.popular[index].loved?SvgPicture.asset("assets/icons/loved.svg",width: 25,height: 25,)
-                                                :SvgPicture.asset("assets/icons/path.svg",width: 25,height: 25,)
-                                        );
-                                      },)
+                                      height: 50,
+                                      width: 50,
+                                      alignment: AlignmentDirectional.topEnd,
+                                      margin: EdgeInsets.only(top: 5,right: 5),
+                                      child: CircleAvatar(
+                                          backgroundColor:  popular.popular[index].loved? Color(0xFF432267):Color(0xFFFEFEFE),
+                                          child:  Consumer<Myfav>(builder: (context,fav,child){
+                                            return IconButton(
+                                                onPressed: () {
+                                                  if (!ispressed){
+                                                    fav.addtofav(popular.popular[index].path, true);
+                                                    popular.change(index,true);
+                                                    ispressed=true;
+                                                  }
+                                                  else{
+                                                    fav.removfan(index);
+                                                    popular.change(index,false);
+                                                    ispressed=false;
+                                                  }
+                                                },
+                                                icon:popular.popular[index].loved?SvgPicture.asset("assets/icons/loved.svg",width: 25,height: 25,)
+                                                    :SvgPicture.asset("assets/icons/path.svg",width: 25,height: 25,)
+                                            );
+                                          },)
 
-                                  ),
-                                ))
+                                      ),
+                                    ))
                               ]
                           )
                       );
@@ -532,23 +534,23 @@ class Body extends StatelessWidget {
   }
 
 
-   Route scaleIn(Widget page) {
-     return PageRouteBuilder(
-       transitionDuration: const Duration(milliseconds: 300),
-       pageBuilder: (context, animation, secondaryAnimation) => page,
-       transitionsBuilder: (context, animation, secondaryAnimation, page) {
-         var begin = 0.0;
-         var end = 1.0;
-         var curve = Curves.ease;
+  Route scaleIn(Widget page) {
+    return PageRouteBuilder(
+      transitionDuration: const Duration(milliseconds: 300),
+      pageBuilder: (context, animation, secondaryAnimation) => page,
+      transitionsBuilder: (context, animation, secondaryAnimation, page) {
+        var begin = 0.0;
+        var end = 1.0;
+        var curve = Curves.ease;
 
-         var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-         return ScaleTransition(
-           scale: animation.drive(tween),
-           child: page,
-         );
-       },
-     );
-   }
+        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        return ScaleTransition(
+          scale: animation.drive(tween),
+          child: page,
+        );
+      },
+    );
+  }
 }
 
 
@@ -568,4 +570,3 @@ class Popular with ChangeNotifier{
 
 
 }
-

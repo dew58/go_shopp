@@ -20,14 +20,21 @@ class _editprofileState extends State<editprofile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.deepPurple,
+
+      backgroundColor: Color(0xFF432267),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         elevation: 0,
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Color(0xFF432267),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            BackButtonIcon(),
+          children: [
+           InkWell(
+             onTap: (){
+               Navigator.pop(context);
+             },
+             child: BackButtonIcon(
+           ),),
             Expanded(
               child: Text("Edit Profile",style: TextStyle(
                 color: Colors.white,
@@ -37,8 +44,11 @@ class _editprofileState extends State<editprofile> {
               ),
             ),
             InkWell(
+              onTap: (){
+                Navigator.pop(context);
+              },
               child:
-              Text("Cancel",style: TextStyle(color: Colors.deepOrangeAccent,fontSize: 15),),
+              Text("Cancel",style: TextStyle(color: Color(0xFFE99000),fontSize: 15),),
             )
           ],
         ),
@@ -63,7 +73,7 @@ class _editprofileState extends State<editprofile> {
                         shape: BoxShape.circle,
                         color: Colors.white
                       ),
-                      child: _image==null? const Icon(FontAwesomeIcons.solidUser,color: Colors.deepPurple,size: 35,)
+                      child: _image==null? const Icon(FontAwesomeIcons.solidUser,color: Color(0xFF432267),size: 35,)
                           : ClipRRect(child: Image.file(_image!,fit: BoxFit.scaleDown,),
                         borderRadius: BorderRadius.circular(100),)  ,
                       ),
@@ -77,14 +87,14 @@ class _editprofileState extends State<editprofile> {
                                 context: context,
                                 builder: ((builder) =>Container(
                                   decoration:  BoxDecoration(
-                                    color: Colors.deepOrangeAccent
+                                    color: Color(0xFFE99000)
                                   ),
                                   height: 150,
                                   width: 100,
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                                     children: [
-                                      const Text("Chosse from",style: TextStyle(color: Colors.deepPurple,fontSize: 20,fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
+                                      const Text("Chosse from",style: TextStyle(color: Color(0xFF432267),fontSize: 20,fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [InkWell(
@@ -96,8 +106,8 @@ class _editprofileState extends State<editprofile> {
                                         margin: EdgeInsets.all(20),
                                         child: Row(
                                           children: const [
-                                            Icon(FontAwesomeIcons.camera,size: 30,color: Colors.deepPurple),
-                                            Text("Camera",style: TextStyle(color: Colors.deepPurple,fontSize: 25),)
+                                            Icon(FontAwesomeIcons.camera,size: 30,color: Color(0xFF432267)),
+                                            Text("Camera",style: TextStyle(color: Color(0xFF432267),fontSize: 25),)
                                           ],
                                         ),
                                       ),),
@@ -110,8 +120,8 @@ class _editprofileState extends State<editprofile> {
                                           margin: EdgeInsets.all(20),
                                           child:Row(
                                           children: const [
-                                            Icon(FontAwesomeIcons.image,size: 30,color: Colors.deepPurple),
-                                            Text("Gallery",style: TextStyle(color: Colors.deepPurple,fontSize: 25))
+                                            Icon(FontAwesomeIcons.image,size: 30,color: Color(0xFF432267)),
+                                            Text("Gallery",style: TextStyle(color: Color(0xFF432267),fontSize: 25))
                                           ],
                                         ),))],),
 
@@ -125,7 +135,7 @@ class _editprofileState extends State<editprofile> {
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.white,width: 5,style: BorderStyle.solid,),
                               shape: BoxShape.circle,
-                              color: Colors.deepPurple,
+                              color: Color(0xFF432267),
                             ),
                             child: const Icon(FontAwesomeIcons.pen,color: Colors.white,size: 20,),
                     ),
@@ -152,17 +162,17 @@ class _editprofileState extends State<editprofile> {
                             height: MediaQuery.of(context).size.height*0.09,
                             width: MediaQuery.of(context).size.width*0.17,
                             decoration: const BoxDecoration(
-                                color: Colors.deepOrangeAccent,
+                                color: Color(0xFFE99000),
                                 borderRadius: BorderRadiusDirectional.only(
                                     topStart: Radius.circular(15),
                                     bottomStart: Radius.circular(15))
                             ),
-                            child: const Icon(FontAwesomeIcons.solidCircleUser,color: Colors.deepPurple,size: 33,),
+                            child: const Icon(FontAwesomeIcons.solidCircleUser,color: Color(0xFF432267),size: 33,),
                           ),
                           Container(
                             margin: const EdgeInsets.only(left: 10),
                             child: const Text("Nada Mohammed",style: TextStyle(
-                                color: Colors.deepPurple,
+                                color: Color(0xFF432267),
                                 fontSize: 17,
                                 fontWeight: FontWeight.bold
                             ),),
@@ -185,17 +195,17 @@ class _editprofileState extends State<editprofile> {
                             height: MediaQuery.of(context).size.height*0.09,
                             width: MediaQuery.of(context).size.width*0.17,
                             decoration: const BoxDecoration(
-                                color: Colors.deepOrangeAccent,
+                                color: Color(0xFFE99000),
                                 borderRadius: BorderRadiusDirectional.only(
                                     topStart: Radius.circular(15),
                                     bottomStart: Radius.circular(15))
                             ),
-                            child: const Icon(FontAwesomeIcons.solidEnvelope,color: Colors.deepPurple,size: 33,),
+                            child: const Icon(FontAwesomeIcons.solidEnvelope,color: Color(0xFF432267),size: 33,),
                           ),
                           Container(
                             margin: const EdgeInsets.only(left: 10),
                             child: const Text("nada.mohammed@example.com",style: TextStyle(
-                                color: Colors.deepPurple,
+                                color: Color(0xFF432267),
                                 fontSize: 17,
                                 fontWeight: FontWeight.bold
                             ),),
@@ -218,17 +228,17 @@ class _editprofileState extends State<editprofile> {
                             height: MediaQuery.of(context).size.height*0.09,
                             width: MediaQuery.of(context).size.width*0.17,
                             decoration: const BoxDecoration(
-                                color: Colors.deepOrangeAccent,
+                                color: Color(0xFFE99000),
                                 borderRadius: BorderRadiusDirectional.only(
                                     topStart: Radius.circular(15),
                                     bottomStart: Radius.circular(15))
                             ),
-                            child: const Icon(FontAwesomeIcons.house,color: Colors.deepPurple,size: 33,),
+                            child: const Icon(FontAwesomeIcons.house,color: Color(0xFF432267),size: 33,),
                           ),
                           Container(
                             margin: const EdgeInsets.only(left: 10),
                             child: const Text("Al Arish, Egypt",style: TextStyle(
-                                color: Colors.deepPurple,
+                                color: Color(0xFF432267),
                                 fontSize: 17,
                                 fontWeight: FontWeight.bold
                             ),),
@@ -251,17 +261,17 @@ class _editprofileState extends State<editprofile> {
                             height: MediaQuery.of(context).size.height*0.09,
                             width: MediaQuery.of(context).size.width*0.17,
                             decoration: const BoxDecoration(
-                                color: Colors.deepOrangeAccent,
+                                color: Color(0xFFE99000),
                                 borderRadius: BorderRadiusDirectional.only(
                                     topStart: Radius.circular(15),
                                     bottomStart: Radius.circular(15))
                             ),
-                            child: const Icon(FontAwesomeIcons.locationPin,color: Colors.deepPurple,size: 33,),
+                            child: const Icon(FontAwesomeIcons.locationPin,color: Color(0xFF432267),size: 33,),
                           ),
                           Container(
                             margin: EdgeInsets.only(left: 10),
                             child: const Text("23 july St. North Sinai.Egypt",style: TextStyle(
-                                color: Colors.deepPurple,
+                                color: Color(0xFF432267),
                                 fontSize: 17,
                                 fontWeight: FontWeight.bold
                             ),),
@@ -284,17 +294,17 @@ class _editprofileState extends State<editprofile> {
                             height: MediaQuery.of(context).size.height*0.09,
                             width: MediaQuery.of(context).size.width*0.17,
                             decoration: const BoxDecoration(
-                                color: Colors.deepOrangeAccent,
+                                color: Color(0xFFE99000),
                                 borderRadius: BorderRadiusDirectional.only(
                                     topStart: Radius.circular(15),
                                     bottomStart: Radius.circular(15))
                             ),
-                            child: const Icon(FontAwesomeIcons.phone,color: Colors.deepPurple,size: 33,),
+                            child: const Icon(FontAwesomeIcons.phone,color:Color(0xFF432267),size: 33,),
                           ),
                           Container(
                             margin: const EdgeInsets.only(left: 10),
                             child: const Text("+201016728784",style: TextStyle(
-                                color: Colors.deepPurple,
+                                color: Color(0xFF432267),
                                 fontSize: 17,
                                 fontWeight: FontWeight.bold
                             ),),
@@ -313,7 +323,7 @@ class _editprofileState extends State<editprofile> {
                   borderRadius:BorderRadiusDirectional.only(
                       topStart: Radius.circular(15)
                   ,topEnd: Radius.circular(15)),
-                  color: Colors.deepOrangeAccent,
+                  color: Color(0xFFE99000),
                 ),
                 child: const Center(child: Text("Save",style: TextStyle(color: Colors.white,fontSize: 17,fontWeight: FontWeight.bold),textAlign: TextAlign.center,)),
               )

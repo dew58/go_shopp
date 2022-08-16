@@ -106,11 +106,17 @@ class _CartState extends State<Cart> {
               return Column(
                 children: [
                   Container(
-                    height: 20,
+                    height: 10,
                   ),
                   Stack(
                     children: [
-                      Center(
+                      Container(
+                        height: MediaQuery.of(context).size.height*0.18,
+                        width: MediaQuery.of(context).size.width*0.9,
+                      ),
+                      Positioned(
+                          top:10,
+                          child: Center(
                         child:  Container(
                           decoration:BoxDecoration(
                             borderRadius: const BorderRadius.all(Radius.circular(20)),
@@ -125,9 +131,10 @@ class _CartState extends State<Cart> {
                             ],),
                           height: MediaQuery.of(context).size.height*0.15,
                           width: MediaQuery.of(context).size.width*0.9,
-                        ),),
+                        ),)),
                       Positioned(
-                        left:20,
+                        top: 10,
+                        left:0,
                         child: Container(
                             height: MediaQuery.of(context).size.height*0.15,
                             width:90,
@@ -138,7 +145,7 @@ class _CartState extends State<Cart> {
                             )),
                       ),
                       Positioned(
-                        top:20,
+                        top:30,
                         left: MediaQuery.of(context).size.width*0.3,
                         child: Column(
                           mainAxisAlignment : MainAxisAlignment.start,
@@ -162,16 +169,35 @@ class _CartState extends State<Cart> {
                             ),
                           ],),),
                       Positioned(
-                          bottom:0,
-                          right :20,
+                          bottom:MediaQuery.of(context).size.height*0.017,
+                          right :0,
                           child: Container(
                             decoration: BoxDecoration(
                               color: Color(0xFF432267),
                               borderRadius: const BorderRadius.only(topLeft:Radius.circular(20),
                                 bottomRight: Radius.circular(20),),
                             ),
-                            child: IconButton(onPressed: () {  },
-                              icon: Icon(FontAwesomeIcons.solidHeart,color: Color(0xFFE99000)) ,),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width*0.14,
+                              margin:EdgeInsets.only(right: 15,left:15),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween
+                                ,children: [
+                                  InkWell(child: Container(
+                                    child: Text("-",style: TextStyle(color: Color(0xFFE99000),fontSize:35),),),),
+                                  Container(
+                                    child: Text("1",style: TextStyle(color: Color(0xFFFEFEFE),fontSize: 17),),),
+                                  InkWell(child: Container(
+                                    child: Text("+",style: TextStyle(color: Color(0xFFE99000),fontSize:35)),),),
+                                ],
+                              ),
+                            )
+                          )),
+                      Positioned(
+                        top:0,
+                          right:0,
+                          child: InkWell(
+                            child: SvgPicture.asset("assets/icons/Group 414.svg",height: 25,width: 25,),
                           ))
                     ],
                   )
@@ -184,7 +210,7 @@ class _CartState extends State<Cart> {
               bottom: 0,
               child: InkWell(
             onTap: (){
-              Navigator.push(context, scaleIn(MainHome()));
+              Navigator.push(context, scaleIn(Checkout()));
             },
             child:  Container(
               height: MediaQuery.of(context).size.height*0.07,
@@ -196,7 +222,7 @@ class _CartState extends State<Cart> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 //crossAxisAlignment: CrossAxisAlignment.center,
-                children: [Icon(Icons.home,color: Color(0xFFE99000),size: 30,),
+                children: [SvgPicture.asset("assets/icons/Icon_Credit Card.svg",color: Color(0xFFE99000),),
                   Container(margin: EdgeInsets.only(left: 20) ,
                       child: Text("Checkout",style: TextStyle(
                           color: Color(0xFFFEFEFE),fontSize: 20
