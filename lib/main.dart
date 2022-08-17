@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:go_shop/productmodel.dart';
-import 'package:go_shop/testapi.dart';
+import 'package:go_shop/Models/cartmodel.dart';
+import 'package:go_shop/Models/historymodel.dart';
+import 'Models/wishlistmodel.dart';
 import 'package:go_shop/wishlist.dart';
 import 'package:provider/provider.dart';
 import 'apisetting.dart';
@@ -23,9 +24,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
-
-
 
   bool? logged ;
   SharedPreferences? pref ;
@@ -55,12 +53,25 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
+  //
+  // late List<Product> product =[];
+  //
+  // getproduct()async{
+  //   product = await fetchProduct() ;
+  //   Future.delayed(const Duration(seconds: 1)).then((value) {
+  //     setState(() {
+  //     });
+  //   });
+  // }
   @override
   Widget build(BuildContext context) {
-    getdata();
+
+
     return  MultiProvider(
         providers: [
-          ChangeNotifierProvider<Myfav>(create: (context) => Myfav()),
+          ChangeNotifierProvider<Wishmodel>(create: (context) => Wishmodel()),
+          ChangeNotifierProvider<History>(create: (context) => History()),
+          ChangeNotifierProvider<Cartmodel>(create: (context) => Cartmodel()),
           ChangeNotifierProvider<Popular>(create: (context) => Popular()),
         ],
         child:MaterialApp(
@@ -68,8 +79,7 @@ class _MyAppState extends State<MyApp> {
             theme: ThemeData(
               fontFamily: 'JosefinSans',
             ),
-            home: homee()
-
+            home: MainHome()
 
         )
     );

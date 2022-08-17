@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import 'package:go_shop/Models/historymodel.dart';
+import 'package:provider/provider.dart';
 import 'home.dart';
 
 class uihistory extends StatefulWidget {
@@ -16,6 +17,7 @@ class uihistory extends StatefulWidget {
 class _uihistoryState extends State<uihistory> {
   @override
   Widget build(BuildContext context) {
+    final history = Provider.of<History>(context);
     return Scaffold(
     backgroundColor: Color(0xFFFEFEFE),
       appBar: AppBar(
@@ -42,7 +44,7 @@ class _uihistoryState extends State<uihistory> {
     child: ListView.builder(
     scrollDirection: Axis.vertical,
     shrinkWrap: true,
-    itemCount: 6,
+    itemCount: history.history.length,
     itemBuilder: (BuildContext context, int index) {
     return Column(
     children: [
@@ -75,7 +77,7 @@ class _uihistoryState extends State<uihistory> {
             child: ClipRRect(
               borderRadius: BorderRadius.only(topLeft:Radius.circular(20),
                   bottomLeft:Radius.circular(20) ),
-              child: Image.asset("assets/categories/fashion/3bd8c4cec1abb656e5320f8f1cff77eb.jpg",fit: BoxFit.fill,),
+              child: Image.network("${history.history[index].image}",fit: BoxFit.fill,),
             )),
       ),
       Positioned(
@@ -86,11 +88,11 @@ class _uihistoryState extends State<uihistory> {
           children: [
             Align(
               alignment : Alignment.topLeft,
-              child:Text("#1234567     10 Aug 2020  ",style: TextStyle(fontWeight: FontWeight.w700,color: Color(0xFF9F94AB),fontSize: 10),),),
+              child:Text("${history.history[index].id}  \t   ${history.date}  ",style: TextStyle(fontWeight: FontWeight.w700,color: Color(0xFF9F94AB),fontSize: 10),),),
             SizedBox(height: 5,),
             Align(
               alignment : Alignment.topLeft,
-              child:Text("Women's Fall Winter Sacrf",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 10),),),
+              child:Text("${history.history[index].title}",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 10),),),
             Padding(
               padding: const EdgeInsets.only(right: 67),
               child: Align(

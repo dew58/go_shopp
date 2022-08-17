@@ -56,7 +56,7 @@ class _UserUiState extends State<UserUi> {
         return product==null || product.isEmpty?Center(child: CircularProgressIndicator(),):Center(
           child: Container
             (child: Text
-            (product[index].description),),);
+            (""),),);
       }),
     )
     ;

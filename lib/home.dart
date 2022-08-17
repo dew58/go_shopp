@@ -12,8 +12,10 @@ import 'package:go_shop/wishlist.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'Models/wishlistmodel.dart';
+import 'Models/cartmodel.dart';
 import 'apisetting.dart';
+import 'package:collection/src/iterable_extensions.dart';
 
 
 class MainHome extends StatefulWidget {
@@ -25,16 +27,7 @@ class MainHome extends StatefulWidget {
 
 class _MainHomeState extends State<MainHome> {
 
-  late List<Product> product =[];
-
-  getproduct()async{
-    product = await fetchProduct() ;
-    Future.delayed(const Duration(seconds: 1)).then((value) {
-      setState ((){});
-    });
-  }
   int currentIndex = 1;
-
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +35,10 @@ class _MainHomeState extends State<MainHome> {
       menuScreen: Drawer(setIndex: (index) {
         setState(() {
           currentIndex = index;
-        });
-      },),
+        }
+        );
+      },
+      ),
       mainScreen: currentScreen(),
       menuBackgroundColor: Color(0xFF432267),
       angle: 0,
@@ -54,8 +49,7 @@ class _MainHomeState extends State<MainHome> {
           .size
           .width * 0.65,
 
-    )
-    ;
+    );
   }
 
   Widget currentScreen() {
@@ -147,7 +141,8 @@ class _DrawerState extends State<Drawer> {
                             Text('Wishlist',style: TextStyle(color: Color(0xFFFEFEFE),fontWeight: FontWeight.bold),),
                           ],
                         ),
-                      ),),
+                      ),
+                    ),
                     Container(
                         margin: EdgeInsets.only(left: 20, bottom: 12),
                         child: InkWell(
@@ -161,7 +156,8 @@ class _DrawerState extends State<Drawer> {
                               Text('Cart',style: TextStyle(color: Color(0xFFFEFEFE),fontWeight: FontWeight.bold),),
                             ],
                           ),
-                        )),
+                        ),
+                    ),
                     Container(
                         margin: EdgeInsets.only(left: 20, bottom: 12),
                         child: InkWell(
@@ -175,7 +171,8 @@ class _DrawerState extends State<Drawer> {
                               Text('Order History',style: TextStyle(color: Color(0xFFFEFEFE),fontWeight: FontWeight.bold),),
                             ],
                           ),
-                        )),
+                        ),
+                    ),
                     Container(
                       margin: EdgeInsets.only(left: 20, bottom: 12),
                       child: InkWell(
@@ -189,7 +186,8 @@ class _DrawerState extends State<Drawer> {
                             Text('Profile',style: TextStyle(color: Color(0xFFFEFEFE),fontWeight: FontWeight.bold),),
                           ],
                         ),
-                      ),),
+                      ),
+                    ),
                     Container(
                       margin: EdgeInsets.only(left: 20, bottom: 12),
                       child: InkWell(
@@ -203,7 +201,8 @@ class _DrawerState extends State<Drawer> {
                             Text('App Setting',style: TextStyle(color: Color(0xFFFEFEFE),fontWeight: FontWeight.bold),),
                           ],
                         ),
-                      ),),
+                      ),
+                    ),
                     Container(
                       margin: EdgeInsets.only(left: 20, bottom: 12),
                       child: InkWell(
@@ -217,12 +216,12 @@ class _DrawerState extends State<Drawer> {
                             Text('Help & FAQs',style: TextStyle(color: Color(0xFFFEFEFE),fontWeight: FontWeight.bold),),
                           ],
                         ),
-                      ),),
-
-
+                      ),
+                    ),
                   ],
                 ),
-              )),
+              ),
+          ),
           Positioned(
             bottom: 30,
             child:Container(
@@ -234,7 +233,8 @@ class _DrawerState extends State<Drawer> {
                   Text('Logout',style: TextStyle(color: Color(0xFFFEFEFE),fontWeight: FontWeight.bold),),
                 ],
               ),
-            ),),
+            ),
+          ),
         ],
 
       ),
@@ -251,19 +251,6 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  late List<Product> product =[];
-
-  getproduct()async{
-    product = await fetchProduct() ;
-    Future.delayed(const Duration(seconds: 1)).then((value) {
-      setState ((){});
-    });
-  }
-
-  @override void initState() {
-    getproduct();
-    super.initState();
-  }
 
 
   List <String> offers =["assets/5a6561119db533beb718347ff9c8b81d.jpg",
@@ -272,15 +259,20 @@ class _BodyState extends State<Body> {
 
   //final GlobalKey<ScaffoldState> _key = GlobalKey();
 
-  bool ispressed = false;
+  @override
+  void initState() {
+    final product = Provider.of<Popular>(context, listen: false);
+    product.getproduct(context);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    final wish = Provider.of<Wishmodel>(context);
+    final cart = Provider.of<Cartmodel>(context);
+    final product = Provider.of<Popular>(context);
+    return product.loading?Center(child: CircularProgressIndicator(),): Scaffold(
         backgroundColor:Color(0xFFFEFEFE) ,
-
-        body:  Consumer<Popular>(builder: (context,popular,child){
-          return ListView(
-
+        body: ListView(
             shrinkWrap: true,
             physics: const PageScrollPhysics(),
             children:<Widget> [
@@ -292,7 +284,6 @@ class _BodyState extends State<Body> {
                     toolbarHeight: 120,
                     automaticallyImplyLeading: false,
                     backgroundColor: Color(0xFF432267),
-
                     title: Padding(
                       padding: const EdgeInsets.only(bottom: 30),
                       child: Row(
@@ -422,17 +413,13 @@ class _BodyState extends State<Body> {
               ),// popular
               Container(
                 margin: EdgeInsets.all(15),
-                child:InkWell(
-                  onTap:  () {
-                    Navigator.push(context, scaleIn(cards()));
-                  },
-                  child: product.isEmpty||product==null? Center(child: CircularProgressIndicator(),): MasonryGridView.count(
+                child: product.product.isEmpty||product.product==null? Center(child: CircularProgressIndicator(),): MasonryGridView.count(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     crossAxisCount: 2
                     ,crossAxisSpacing: 10,
                     mainAxisSpacing: 10,
-                    itemCount: 20,
+                    itemCount: product.product.length,
                     itemBuilder: (context, index) {
                       return Container(
                           child: Stack(
@@ -440,14 +427,20 @@ class _BodyState extends State<Body> {
                                 Stack(
                                     alignment: Alignment.bottomCenter,
                                     children: [
-                                      Padding(
+                                      InkWell(
+                                          onTap:(){
+                                            Navigator.push(context, scaleIn(cards()));
+                                            wish.pagenum(index);
+                                          },
+                                          child:Padding(
                                         padding: const EdgeInsets.only(bottom: 20,),
                                         child: ClipRRect(
                                           borderRadius: BorderRadius.all(Radius.circular(15)),
                                           child:
-                                          Image.network(product[index].image,fit: BoxFit.cover,) ,
+                                          Image.network(
+                                            '${product.product[index].image}',fit: BoxFit.cover,) ,
                                         ),
-                                      ),
+                                      )),
                                       Container(
                                         height:36,
                                         width:180,
@@ -465,28 +458,35 @@ class _BodyState extends State<Body> {
                                           children: <Widget>[
                                             Expanded(
                                               child: Container(
-                                                decoration: new BoxDecoration(
+                                                decoration:  const BoxDecoration(
                                                     color: Color(0xFFFEFEFE),
-                                                    borderRadius: const BorderRadius.only(
-                                                      topLeft: const Radius.circular(10),
-                                                      bottomLeft: const Radius.circular(10),
+                                                    borderRadius: BorderRadius.only(
+                                                      topLeft: Radius.circular(10),
+                                                      bottomLeft: Radius.circular(10),
                                                     )
                                                 ),
                                                 child: Column(
                                                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                                                   children: <Widget>[
                                                     Text("Type of Brand",style: TextStyle(color: Color(0xFF432267),fontSize: 12,fontWeight: FontWeight.bold),textAlign:TextAlign.center),
-                                                    Text("Brand",style: TextStyle(color: Colors.grey,fontSize: 10),textAlign:TextAlign.center,),
+                                                    Text("${product.product[index].category}",style: TextStyle(color: Colors.grey,fontSize: 10),textAlign:TextAlign.center,),
                                                   ],
                                                 ),
                                               ),
                                             ),
-                                            Container(
-                                              decoration: new BoxDecoration(
+                                            InkWell(
+                                              onTap:(){
+                                                if((cart.cartintem.firstWhereOrNull((item) => item.id == product.product[index].id)==null )) {
+                                                  cart.addtocart(product.product[index]);
+                                                  print("added");
+                                                }
+                                              },
+                                              child: Container(
+                                              decoration: const BoxDecoration(
                                                   color: Color(0xFF432267),
-                                                  borderRadius: const BorderRadius.only(
-                                                    bottomRight: const Radius.circular(10),
-                                                    topRight: const Radius.circular(10),
+                                                  borderRadius: BorderRadius.only(
+                                                    bottomRight: Radius.circular(10),
+                                                    topRight: Radius.circular(10),
                                                   )
                                               ),
                                               child: Column(
@@ -495,7 +495,7 @@ class _BodyState extends State<Body> {
                                                   SvgPicture.asset("assets/icons/shopping-bag.svg"),
                                                   Padding(
                                                     padding: const EdgeInsets.only(right: 10.0,top: 2),
-                                                    child: Text('\$ 15.99', style: TextStyle(
+                                                    child: Text('\$ ${product.product[index].price}', style: TextStyle(
                                                         fontSize: 10,
                                                         fontWeight: FontWeight.bold,
                                                         color:  Color(0xFFFEFEFE)
@@ -504,7 +504,7 @@ class _BodyState extends State<Body> {
                                                   ),
                                                 ],
                                               ),
-                                            )
+                                            ),)
                                           ],
                                         ),
                                       ),
@@ -512,7 +512,7 @@ class _BodyState extends State<Body> {
                                 ),
                                 Container(
                                   margin: EdgeInsets.only(top: 5,left: 5),
-                                  decoration: new BoxDecoration(
+                                  decoration:  BoxDecoration(
                                     color: Color(0xFFFEFEFE),
                                     borderRadius: const BorderRadius.all(Radius.circular(20)),
                                   ),
@@ -529,25 +529,22 @@ class _BodyState extends State<Body> {
                                       alignment: AlignmentDirectional.topEnd,
                                       margin: EdgeInsets.only(top: 5,right: 5),
                                       child: CircleAvatar(
-                                          backgroundColor:  popular.popular[index].loved? Color(0xFF432267):Color(0xFFFEFEFE),
-                                          child:  Consumer<Myfav>(builder: (context,fav,child){
-                                            return IconButton(
+                                          backgroundColor:!(wish.loveditem.firstWhereOrNull((item) => item.id == product.product[index].id)==null )?Color(0xFF432267) :  Color(0xFFFEFEFE),
+                                          child: IconButton(
                                                 onPressed: () {
-                                                  if (!ispressed){
-                                                    fav.addtofav(popular.popular[index].path, true);
-                                                    popular.change(index,true);
-                                                    ispressed=true;
-                                                  }
-                                                  else{
-                                                    fav.removfan(index);
-                                                    popular.change(index,false);
-                                                    ispressed=false;
-                                                  }
+                                                  if((wish.loveditem.firstWhereOrNull((item) => item.id == product.product[index].id)==null )) {
+                                                      wish.addtowish(product.product[index]);
+                                                      print("added");
+                                                    }
+                                                    else {
+                                                      wish.removwish(
+                                                          product.product[index].id);
+                                                      print("removed");
+                                                    }
                                                 },
-                                                icon:popular.popular[index].loved?SvgPicture.asset("assets/icons/loved.svg",width: 25,height: 25,)
+                                                icon:!(wish.loveditem.firstWhereOrNull((item) => item.id == product.product[index].id)==null )?SvgPicture.asset("assets/icons/loved.svg",width: 25,height: 25,)
                                                     :SvgPicture.asset("assets/icons/path.svg",width: 25,height: 25,)
-                                            );
-                                          },)
+                                          ,)
 
                                       ),
                                     ))
@@ -557,11 +554,11 @@ class _BodyState extends State<Body> {
                     },
                   ),
                 ),
-              ),
+
             ],
-          );
-        },)
-    );
+          )
+        ,)
+    ;
   }
 }
 
@@ -589,17 +586,18 @@ class _BodyState extends State<Body> {
 
 
 class Popular with ChangeNotifier{
-  List<Item> popular=[
-    Item(path: "assets/categories/fashion/3bd8c4cec1abb656e5320f8f1cff77eb.jpg", loved: false),
-    Item(path: "assets/categories/fashion/49b883c985108407e0148b14d77be254.jpg", loved: false),
-    Item(path: "assets/categories/fashion/7724da735c4c57d60c219d9f6cd90213.jpg", loved: false),
-    Item(path: "assets/categories/fashion/9766d5104d82edef4e6ea4c0cf1d736d.jpg", loved: false),
-    Item(path: "assets/categories/fashion/dcf670bb756cdd62cc98109eb95adb25.jpg", loved: false),
-    Item(path: "assets/categories/fashion/M24-310s.jpg", loved: false),
-  ];
-  change(int index, bool val){
-    popular[index].loved =val;
+
+  late List<Product> product =[];
+  bool loading =false;
+
+  getproduct(context)async{
+    loading =true;
+    product = await fetchProduct() ;
+    loading =false;
     notifyListeners();
+    // Future.delayed(const Duration(seconds: 1)).then((value) {
+    //
+    // });
   }
 
 

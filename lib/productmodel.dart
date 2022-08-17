@@ -2,20 +2,20 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 
 class Product {
-  final num id;
-  final String title;
-  final num price;
-  final String description;
-  final String category;
-  final String image;
+  final num? id;
+  final String? title;
+  final num? price;
+  final String? description;
+  final String? category;
+  final String? image;
 
   Product({
-    required this.id,
-    required this.title,
-    required this.price,
-    required this.description,
-    required this.category,
-    required this.image,
+    this.id,
+    this.title,
+    this.price,
+    this.description,
+    this.category,
+    this.image,
   });
 
   factory Product.fromJson(Map<String, dynamic> json,) {

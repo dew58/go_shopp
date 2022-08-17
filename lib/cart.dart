@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import 'package:provider/provider.dart';
+import 'Models/cartmodel.dart';
 import 'checkout.dart';
 import 'home.dart';
 class Cart extends StatefulWidget {
@@ -16,6 +16,7 @@ class Cart extends StatefulWidget {
 class _CartState extends State<Cart> {
   @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<Cartmodel>(context);
     return Scaffold(
       body: Stack(
         children: [
@@ -101,7 +102,7 @@ class _CartState extends State<Cart> {
             child: ListView.builder(
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
-            itemCount: 3,
+            itemCount: cart.cartintem.length,
             itemBuilder: (BuildContext context, int index) {
               return Column(
                 children: [
@@ -141,7 +142,7 @@ class _CartState extends State<Cart> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.only(topLeft:Radius.circular(20),
                                   bottomLeft:Radius.circular(20) ),
-                              child: Image.asset("assets/categories/fashion/3bd8c4cec1abb656e5320f8f1cff77eb.jpg",fit: BoxFit.fill,),
+                              child: Image.network("${cart.cartintem[index].image}",fit: BoxFit.fill,),
                             )),
                       ),
                       Positioned(
@@ -152,7 +153,7 @@ class _CartState extends State<Cart> {
                           children: [
                             Align(
                               alignment : Alignment.topLeft,
-                              child:Text("Woman's White wear",style: TextStyle(fontWeight: FontWeight.bold),),),
+                              child:Container(child: Text("${cart.cartintem[index].title}",style: TextStyle(fontWeight: FontWeight.bold),),)),
                             Align(
                               alignment : Alignment.topLeft,
                               child:Text("American Trenda",style: TextStyle(fontWeight: FontWeight.bold),),),
@@ -197,6 +198,10 @@ class _CartState extends State<Cart> {
                         top:0,
                           right:0,
                           child: InkWell(
+                            onTap: (){
+                              cart.removcart(cart.cartintem[index].id);
+
+                            },
                             child: SvgPicture.asset("assets/icons/Group 414.svg",height: 25,width: 25,),
                           ))
                     ],
