@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:go_shop/cards.dart';
 import 'package:go_shop/cart.dart';
+import 'package:go_shop/productmodel.dart';
 import 'package:go_shop/profile.dart';
 import 'package:go_shop/seeall.dart';
 import 'package:go_shop/ui%20history.dart';
@@ -11,6 +12,8 @@ import 'package:go_shop/wishlist.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import 'apisetting.dart';
 
 
 class MainHome extends StatefulWidget {
@@ -21,6 +24,15 @@ class MainHome extends StatefulWidget {
 }
 
 class _MainHomeState extends State<MainHome> {
+
+  late List<Product> product =[];
+
+  getproduct()async{
+    product = await fetchProduct() ;
+    Future.delayed(const Duration(seconds: 1)).then((value) {
+      setState ((){});
+    });
+  }
   int currentIndex = 1;
 
 
@@ -231,9 +243,28 @@ class _DrawerState extends State<Drawer> {
 
 }
 
+class Body extends StatefulWidget {
+  const Body({Key? key}) : super(key: key);
 
-class Body extends StatelessWidget {
-  Body({Key? key}) : super(key: key);
+  @override
+  _BodyState createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  late List<Product> product =[];
+
+  getproduct()async{
+    product = await fetchProduct() ;
+    Future.delayed(const Duration(seconds: 1)).then((value) {
+      setState ((){});
+    });
+  }
+
+  @override void initState() {
+    getproduct();
+    super.initState();
+  }
+
 
   List <String> offers =["assets/5a6561119db533beb718347ff9c8b81d.jpg",
     "assets/ab640b2dfa42adac718ab6e5f40d99.jpg",
@@ -395,13 +426,13 @@ class Body extends StatelessWidget {
                   onTap:  () {
                     Navigator.push(context, scaleIn(cards()));
                   },
-                  child:  MasonryGridView.count(
+                  child: product.isEmpty||product==null? Center(child: CircularProgressIndicator(),): MasonryGridView.count(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     crossAxisCount: 2
                     ,crossAxisSpacing: 10,
                     mainAxisSpacing: 10,
-                    itemCount: popular.popular.length ,
+                    itemCount: 20,
                     itemBuilder: (context, index) {
                       return Container(
                           child: Stack(
@@ -414,7 +445,7 @@ class Body extends StatelessWidget {
                                         child: ClipRRect(
                                           borderRadius: BorderRadius.all(Radius.circular(15)),
                                           child:
-                                          Image.asset(popular.popular[index].path,fit: BoxFit.cover,) ,
+                                          Image.network(product[index].image,fit: BoxFit.cover,) ,
                                         ),
                                       ),
                                       Container(
@@ -532,6 +563,9 @@ class Body extends StatelessWidget {
         },)
     );
   }
+}
+
+
 
 
   Route scaleIn(Widget page) {
@@ -551,7 +585,7 @@ class Body extends StatelessWidget {
       },
     );
   }
-}
+
 
 
 class Popular with ChangeNotifier{

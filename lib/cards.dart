@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_shop/productmodel.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
+import 'apisetting.dart';
 
 class cards extends StatefulWidget {
   const cards({Key? key}) : super(key: key);
@@ -11,6 +14,7 @@ class cards extends StatefulWidget {
 }
 
 class _cardsState extends State<cards> {
+  late Future<Product> futureAlbum;
   final controller = PageController(initialPage: 0);
 
   List <String> popularimge =["assets/categories/fashion/3bd8c4cec1abb656e5320f8f1cff77eb.jpg",
@@ -19,6 +23,7 @@ class _cardsState extends State<cards> {
     "assets/categories/fashion/9766d5104d82edef4e6ea4c0cf1d736d.jpg",
     "assets/categories/fashion/dcf670bb756cdd62cc98109eb95adb25.jpg",
     "assets/categories/fashion/M24-310s.jpg"];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
