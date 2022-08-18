@@ -6,7 +6,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:go_shop/home.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'Models/cartmodel.dart';
 import 'Models/wishlistmodel.dart';
+import 'cards.dart';
+import 'package:collection/src/iterable_extensions.dart';
 
 
   class Wishpage extends StatefulWidget {
@@ -22,6 +25,8 @@ import 'Models/wishlistmodel.dart';
     @override
     Widget build(BuildContext context) {
       final wish = Provider.of<Wishmodel>(context);
+      final cart = Provider.of<Cartmodel>(context);
+      final product = Provider.of<Popular>(context);
 
       return Scaffold(
           appBar: AppBar(
@@ -85,7 +90,13 @@ import 'Models/wishlistmodel.dart';
                     itemCount:wish.loveditem.length,
 
                     itemBuilder: (context, index) {
-                      return Container(
+                      return InkWell(
+                        onTap: (){
+
+                          Navigator.push(context, scaleIn(cards()));
+                          wish.pagenum((wish.loveditem[index].id)!-1);
+                        },
+                        child: Container(
                           child: Stack(
                               children:[
                                 Stack(
@@ -132,7 +143,14 @@ import 'Models/wishlistmodel.dart';
                                                 ),
                                               ),
                                             ),
-                                            Container(
+                                            InkWell(
+                                              onTap:(){
+                                                if((cart.cartintem.firstWhereOrNull((item) => item.id == product.product[index].id)==null )) {
+                                                  cart.addtocart( Cartvar([product.product[index]],1,product.product[index].id) );
+                                                  print("added");
+                                                }
+                                              },
+                                              child: Container(
                                               decoration: new BoxDecoration(
                                                   color: Color(0xFF432267),
                                                   borderRadius: const BorderRadius.only(
@@ -156,7 +174,7 @@ import 'Models/wishlistmodel.dart';
                                                   ),
                                                 ],
                                               ),
-                                            )
+                                            ),)
                                           ],
                                         ),
                                       ),
@@ -193,7 +211,7 @@ import 'Models/wishlistmodel.dart';
                                 )
                               ]
                           )
-                      );
+                      ),);
                     }
                 ):
                 ListView.builder(
@@ -226,11 +244,16 @@ import 'Models/wishlistmodel.dart';
                           child: Container(
                               height: MediaQuery.of(context).size.height*0.15,
                               width:90,
-                              child: ClipRRect(
+                              child:InkWell(
+                                onTap:(){
+                                  Navigator.push(context, scaleIn(cards()));
+                                  wish.pagenum((wish.loveditem[index].id)!-1);
+                                },
+                                child:  ClipRRect(
                                 borderRadius: BorderRadius.only(topLeft:Radius.circular(20),
                                     bottomLeft:Radius.circular(20) ),
                                 child: Image.network("${wish.loveditem[index].image}",fit: BoxFit.fill,),
-                              )),
+                              ),)),
                         ),
                         Positioned(
                           top:20,

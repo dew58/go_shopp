@@ -4,6 +4,7 @@ import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_shop/ui%20history.dart';
 import 'package:go_shop/wishlist.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'cart.dart';
 import 'editcard.dart';
@@ -20,9 +21,29 @@ class profi extends StatefulWidget {
 }
 
 class _profiState extends State<profi> {
+  SharedPreferences? pref2 ;
+
+  String email ="";
+
+
+  setemail(String ema)async{
+    pref2= await SharedPreferences.getInstance();
+    pref2!.setString("email", ema);
+
+  }
+  getdata()async{
+    pref2= await SharedPreferences.getInstance();
+
+    setState(() {
+      email=pref2!.getString("email")?? "";
+    });
+
+  }
+
 
   @override
   Widget build(BuildContext context) {
+    getdata();
     return Scaffold(
         backgroundColor: Color(0xFFFEFEFE),
     appBar:
@@ -79,7 +100,7 @@ decoration:BoxDecoration(
    children: [
    Text("Ahmed Hossam",style: TextStyle(fontWeight: FontWeight.bold,color: Color(0xFFFEFEFE)),),
      SizedBox(height:2 ,),
-     Text("Ahmed.Hossam@example.com",style: TextStyle(color:  Color(0xFFE99000)),),
+     Text("${email}",style: TextStyle(color:  Color(0xFFE99000)),),
 ],
   ),
 ),

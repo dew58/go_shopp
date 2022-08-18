@@ -50,10 +50,10 @@ var currentPage =0;
                   child: Image.network("${product.product[index].image}"),
                 ),
                 Positioned(
-                  top: MediaQuery.of(context).size.height*0.5,
+                  top: MediaQuery.of(context).size.height*0.4,
                   bottom: 0,
                   child: Container(
-                    height: MediaQuery.of(context).size.height*0.5,
+                    height: MediaQuery.of(context).size.height*0.6,
                     width:MediaQuery.of(context).size.width ,
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.only(
@@ -88,20 +88,6 @@ var currentPage =0;
                             child: Text("${product.product[index].description}"
                                 ,style: TextStyle(fontSize: 15),textAlign: TextAlign.left),
                           ),
-                          // Align(
-                          //     alignment: Alignment.topLeft,
-                          //     child: Text("Material & Size",style: TextStyle(fontWeight: FontWeight.bold),)),
-                          //
-                          // Container(
-                          //   margin: EdgeInsets.only(top: 10,bottom: 10),
-                          //   child: Align(
-                          //     alignment: Alignment.topLeft,
-                          //     child: Text("Ultra Soft Cashmere-like Acrylic , furry ,cozy ,light and warm"
-                          //         ,style: TextStyle(fontSize: 15),textAlign: TextAlign.left),
-                          //   ),
-                          // ),
-
-
                         ],
                       ),
                     ),
@@ -145,7 +131,7 @@ var currentPage =0;
                       )),),
                 ),
                 Positioned(
-                    top: MediaQuery.of(context).size.height*0.45,
+                    top: MediaQuery.of(context).size.height*0.35,
                     right: 15,
                     child: Container(
                       decoration: BoxDecoration(

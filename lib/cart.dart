@@ -4,6 +4,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:provider/provider.dart';
 import 'Models/cartmodel.dart';
+import 'Models/wishlistmodel.dart';
+import 'cards.dart';
 import 'checkout.dart';
 import 'home.dart';
 class Cart extends StatefulWidget {
@@ -17,6 +19,7 @@ class _CartState extends State<Cart> {
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<Cartmodel>(context);
+    final wish = Provider.of<Wishmodel>(context);
     return Scaffold(
       body: Stack(
         children: [
@@ -90,134 +93,148 @@ class _CartState extends State<Cart> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Text("Product:",style: TextStyle(color: Color(0xFF9F94AB)),),
-                      Text("Subtotal:",style: TextStyle(color: Color(0xFF9F94AB))),
+                      Text("Product: ${cart.totalitem()}",style: TextStyle(color: Color(0xFF9F94AB)),),
+                      Text("Subtotal: ${cart.totalprice()}",style: TextStyle(color: Color(0xFF9F94AB))),
                       Text("Taxes:",style: TextStyle(color: Color(0xFF9F94AB))),
 
                     ],
                   )
               )),
-          Center(
-
-            child: ListView.builder(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            itemCount: cart.cartintem.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Column(
-                children: [
-                  Container(
-                    height: 10,
-                  ),
-                  Stack(
-                    children: [
-                      Container(
-                        height: MediaQuery.of(context).size.height*0.18,
-                        width: MediaQuery.of(context).size.width*0.9,
-                      ),
-                      Positioned(
-                          top:10,
-                          child: Center(
-                        child:  Container(
-                          decoration:BoxDecoration(
-                            borderRadius: const BorderRadius.all(Radius.circular(20)),
-                            color: Color(0xFFFEFEFE),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 5,
-                                blurRadius: 7,
-                                offset: Offset(0, 3), // changes position of shadow
-                              ),
-                            ],),
-                          height: MediaQuery.of(context).size.height*0.15,
-                          width: MediaQuery.of(context).size.width*0.9,
-                        ),)),
-                      Positioned(
-                        top: 10,
-                        left:0,
-                        child: Container(
-                            height: MediaQuery.of(context).size.height*0.15,
-                            width:90,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.only(topLeft:Radius.circular(20),
-                                  bottomLeft:Radius.circular(20) ),
-                              child: Image.network("${cart.cartintem[index].image}",fit: BoxFit.fill,),
-                            )),
-                      ),
-                      Positioned(
-                        top:30,
-                        left: MediaQuery.of(context).size.width*0.3,
-                        child: Column(
-                          mainAxisAlignment : MainAxisAlignment.start,
+          Positioned(
+              top: MediaQuery.of(context).size.height*0.25,
+              left: MediaQuery.of(context).size.width*0.05,
+              child: Container(
+            height: MediaQuery.of(context).size.height*0.7,
+            width:MediaQuery.of(context).size.width*0.9 ,
+            child: Center(
+              child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: cart.cartintem.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return InkWell(
+                    onTap: (){
+                      Navigator.push(context, scaleIn(cards()));
+                      wish.pagenum((cart.cartintem[index].id)!-1);
+                    },
+                    child: Column(
+                      children: [
+                        Stack(
                           children: [
-                            Align(
-                              alignment : Alignment.topLeft,
-                              child:Container(child: Text("${cart.cartintem[index].title}",style: TextStyle(fontWeight: FontWeight.bold),),)),
-                            Align(
-                              alignment : Alignment.topLeft,
-                              child:Text("American Trenda",style: TextStyle(fontWeight: FontWeight.bold),),),
-                            Row(
-                              children: [
-                                Icon(Icons.star,color: Color(0xFFE99000),),
-                                Icon(Icons.star,color: Color(0xFFE99000),),
-                                Icon(Icons.star,color: Color(0xFFE99000),),
-                                Icon(Icons.star,color: Color(0xFFE99000)),
-                                Icon(Icons.star,color: Color(0xFFE99000)),
-                                Text("+23"),
-
-                              ],
+                            Container(
+                              height: MediaQuery.of(context).size.height*0.18,
+                              width: MediaQuery.of(context).size.width*0.9,
                             ),
-                          ],),),
-                      Positioned(
-                          bottom:MediaQuery.of(context).size.height*0.017,
-                          right :0,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Color(0xFF432267),
-                              borderRadius: const BorderRadius.only(topLeft:Radius.circular(20),
-                                bottomRight: Radius.circular(20),),
+                            Positioned(
+                                top:10,
+                                child: Center(
+                                  child:  Container(
+                                    decoration:BoxDecoration(
+                                      borderRadius: const BorderRadius.all(Radius.circular(20)),
+                                      color: Color(0xFFFEFEFE),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.5),
+                                          spreadRadius: 5,
+                                          blurRadius: 7,
+                                          offset: Offset(0, 3), // changes position of shadow
+                                        ),
+                                      ],),
+                                    height: MediaQuery.of(context).size.height*0.15,
+                                    width: MediaQuery.of(context).size.width*0.9,
+                                  ),)),
+                            Positioned(
+                              top: 10,
+                              left:0,
+                              child: Container(
+                                  height: MediaQuery.of(context).size.height*0.15,
+                                  width:90,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.only(topLeft:Radius.circular(20),
+                                        bottomLeft:Radius.circular(20) ),
+                                    child: Image.network("${cart.cartintem[index].product[0].image}",fit: BoxFit.fill,),
+                                  )),
                             ),
-                            child: Container(
-                              width: MediaQuery.of(context).size.width*0.14,
-                              margin:EdgeInsets.only(right: 15,left:15),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween
-                                ,children: [
-                                  InkWell(child: Container(
-                                    child: Text("-",style: TextStyle(color: Color(0xFFE99000),fontSize:35),),),),
-                                  Container(
-                                    child: Text("1",style: TextStyle(color: Color(0xFFFEFEFE),fontSize: 17),),),
-                                  InkWell(child: Container(
-                                    child: Text("+",style: TextStyle(color: Color(0xFFE99000),fontSize:35)),),),
-                                ],
-                              ),
-                            )
-                          )),
-                      Positioned(
-                        top:0,
-                          right:0,
-                          child: InkWell(
-                            onTap: (){
-                              cart.removcart(cart.cartintem[index].id);
+                            Positioned(
+                              top:30,
+                              left: MediaQuery.of(context).size.width*0.3,
+                              child: Column(
+                                mainAxisAlignment : MainAxisAlignment.start,
+                                children: [
+                                  Align(
+                                      alignment : Alignment.topLeft,
+                                      child:Container(child: Text("${cart.cartintem[index].product[0].title}",style: TextStyle(fontWeight: FontWeight.bold),),)),
+                                  Align(
+                                    alignment : Alignment.topLeft,
+                                    child:Text("American Trenda",style: TextStyle(fontWeight: FontWeight.bold),),),
+                                  Row(
+                                    children: [
+                                      Icon(Icons.star,color: Color(0xFFE99000),),
+                                      Icon(Icons.star,color: Color(0xFFE99000),),
+                                      Icon(Icons.star,color: Color(0xFFE99000),),
+                                      Icon(Icons.star,color: Color(0xFFE99000)),
+                                      Icon(Icons.star,color: Color(0xFFE99000)),
+                                      Text("+23"),
 
-                            },
-                            child: SvgPicture.asset("assets/icons/Group 414.svg",height: 25,width: 25,),
-                          ))
-                    ],
-                  )
-                ],
-              ); },
+                                    ],
+                                  ),
+                                ],),),
+                            Positioned(
+                                bottom:MediaQuery.of(context).size.height*0.017,
+                                right :0,
+                                child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Color(0xFF432267),
+                                      borderRadius: const BorderRadius.only(topLeft:Radius.circular(20),
+                                        bottomRight: Radius.circular(20),),
+                                    ),
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width*0.14,
+                                      margin:EdgeInsets.only(right: 15,left:15),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween
+                                        ,children: [
+                                        InkWell(child: Container(
+                                          child: Text("-",style: TextStyle(color: Color(0xFFE99000),fontSize:35),),),),
+                                        Container(
+                                          child: Text("1",style: TextStyle(color: Color(0xFFFEFEFE),fontSize: 17),),),
+                                        InkWell(child: Container(
+                                          child: Text("+",style: TextStyle(color: Color(0xFFE99000),fontSize:35)),),),
+                                      ],
+                                      ),
+                                    )
+                                )),
+                            Positioned(
+                                top:0,
+                                right:0,
+                                child: InkWell(
+                                  onTap: (){
+                                    cart.removcart(cart.cartintem[index].id);
+
+                                  },
+                                  child: SvgPicture.asset("assets/icons/Group 414.svg",height: 25,width: 25,),
+                                ))
+                          ],
+                        )
+                      ],
+                    ),); },
 
 
-          ),),
+              ),),)),
           Positioned(
               bottom: 0,
               child: InkWell(
             onTap: (){
+              if(cart.cartintem.length>0){
               Navigator.push(context, scaleIn(Checkout()));
+              }else{
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Please add product to the Cart')),
+                );
+              }
+
             },
-            child:  Container(
+              child:  Container(
               height: MediaQuery.of(context).size.height*0.07,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(

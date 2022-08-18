@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 class Product {
   final num? id;
   final String? title;
-  final num? price;
+  var price;
   final String? description;
   final String? category;
   final String? image;

@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_shop/Models/cartmodel.dart';
 import 'package:go_shop/Models/historymodel.dart';
 import 'Models/wishlistmodel.dart';
-import 'package:go_shop/wishlist.dart';
 import 'package:provider/provider.dart';
-import 'apisetting.dart';
 import 'home.dart';
 import 'on_boarding_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,7 +23,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
-  bool? logged ;
+  bool? logged;
   SharedPreferences? pref ;
 
   getdata()async{
@@ -53,20 +51,11 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-  //
-  // late List<Product> product =[];
-  //
-  // getproduct()async{
-  //   product = await fetchProduct() ;
-  //   Future.delayed(const Duration(seconds: 1)).then((value) {
-  //     setState(() {
-  //     });
-  //   });
-  // }
+
   @override
   Widget build(BuildContext context) {
 
-
+getdata();
     return  MultiProvider(
         providers: [
           ChangeNotifierProvider<Wishmodel>(create: (context) => Wishmodel()),
@@ -75,11 +64,12 @@ class _MyAppState extends State<MyApp> {
           ChangeNotifierProvider<Popular>(create: (context) => Popular()),
         ],
         child:MaterialApp(
+            debugShowCheckedModeBanner: false,
             title: 'Flutter Demo',
             theme: ThemeData(
               fontFamily: 'JosefinSans',
             ),
-            home: MainHome()
+            home: homee()
 
         )
     );

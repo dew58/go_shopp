@@ -12,6 +12,7 @@ import 'package:go_shop/wishlist.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'Models/wishlistmodel.dart';
 import 'Models/cartmodel.dart';
 import 'apisetting.dart';
@@ -26,6 +27,7 @@ class MainHome extends StatefulWidget {
 }
 
 class _MainHomeState extends State<MainHome> {
+
 
   int currentIndex = 1;
 
@@ -81,8 +83,40 @@ class Drawer extends StatefulWidget {
 
 class _DrawerState extends State<Drawer> {
 
+  SharedPreferences? pref ;
+
+  bool logged= false ;
+
+  SharedPreferences? pref2 ;
+
+  String email ="";
+
+  setdata (bool log)async{
+    pref= await SharedPreferences.getInstance();
+    pref!.setBool("login", log);
+  }
+
+  setemail(String ema)async{
+    pref2= await SharedPreferences.getInstance();
+    pref2!.setString("email", ema);
+
+  }
+  getdata()async{
+    pref= await SharedPreferences.getInstance();
+    pref2= await SharedPreferences.getInstance();
+
+    setState(() {
+      logged =pref!.getBool("login")?? false;
+      email=pref2!.getString("email")?? "";
+    });
+
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
+    getdata();
     return Scaffold(
       backgroundColor: Color(0xFF432267),
 
@@ -100,7 +134,7 @@ class _DrawerState extends State<Drawer> {
                 Container(
                   margin: EdgeInsets.only(top: 17),
                   child: Text("Nada Mohmmed",style: TextStyle(color: Color(0xFFFEFEFE),fontSize: 18),textAlign: TextAlign.center,),),
-                Text("nada.mohamed@example.com",style: TextStyle(color: Color(0xFFE99000),fontSize: 14),textAlign: TextAlign.center,),
+                Text("${email}",style: TextStyle(color: Color(0xFFE99000),fontSize: 14),textAlign: TextAlign.center,),
               ],
             ),
           ),
@@ -226,13 +260,17 @@ class _DrawerState extends State<Drawer> {
             bottom: 30,
             child:Container(
               margin: EdgeInsets.only(left: 20, bottom: 12),
-              child: Row(
+              child:InkWell(
+                onTap: (){
+                  setdata(false);
+                },
+                child:  Row(
                 children: [
                   SvgPicture.asset("assets/icons/logout.svg",color: Color(0xFFE99000)),
                   SizedBox(width: 12,),
                   Text('Logout',style: TextStyle(color: Color(0xFFFEFEFE),fontWeight: FontWeight.bold),),
                 ],
-              ),
+              ),),
             ),
           ),
         ],
@@ -477,7 +515,7 @@ class _BodyState extends State<Body> {
                                             InkWell(
                                               onTap:(){
                                                 if((cart.cartintem.firstWhereOrNull((item) => item.id == product.product[index].id)==null )) {
-                                                  cart.addtocart(product.product[index]);
+                                                  cart.addtocart( Cartvar([product.product[index]],1,product.product[index].id) );
                                                   print("added");
                                                 }
                                               },

@@ -54,10 +54,16 @@ dependencies:
 dev_dependencies:
 
   flutter_native_splash: ^2.2.7
+  flutter_launcher_icons: ^0.10.0
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/image/Group -3.png"
+
 
   flutter_test:
     sdk: flutter
-
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
@@ -66,7 +72,7 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 flutter_native_splash:
   color: "#663399"
-  image: assets/image/Group -1.png
+  image: assets/image/GO SHOP.png
   android: true
   ios: true
 

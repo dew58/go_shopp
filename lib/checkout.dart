@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_shop/Models/historymodel.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:steps_indicator/steps_indicator.dart';
 import 'package:go_shop/editcard.dart';
 
+import 'Models/cartmodel.dart';
 import 'home.dart';
 
 class Checkout extends StatefulWidget {
@@ -55,7 +58,8 @@ class _CheckoutState extends State<Checkout> {
   @override
   Widget build(BuildContext context) {
 
-
+    final history = Provider.of<History>(context);
+    final cart = Provider.of<Cartmodel>(context);
 
     return Scaffold(
       body:ListView(
@@ -472,7 +476,7 @@ class _CheckoutState extends State<Checkout> {
                                       child: ListView.builder(
                                         scrollDirection: Axis.vertical,
                                         shrinkWrap: true,
-                                        itemCount: 4,
+                                        itemCount: cart.cartintem.length,
                                         itemBuilder: (BuildContext context, int index) {
                                           return
                                             Stack(
@@ -506,7 +510,7 @@ class _CheckoutState extends State<Checkout> {
                                                       child: ClipRRect(
                                                         borderRadius: BorderRadius.only(topLeft:Radius.circular(20),
                                                             bottomLeft:Radius.circular(20) ),
-                                                        child: Image.asset("assets/categories/fashion/3bd8c4cec1abb656e5320f8f1cff77eb.jpg",fit: BoxFit.fill,),
+                                                        child: Image.network("${cart.cartintem[index].product[index].image}",fit: BoxFit.fill,),
                                                       )),
                                                 ),
                                                 Positioned(
@@ -517,10 +521,10 @@ class _CheckoutState extends State<Checkout> {
                                                     children: [
                                                       Align(
                                                         alignment : Alignment.topLeft,
-                                                        child:Text("Woman's White wear",style: TextStyle(fontWeight: FontWeight.bold),),),
+                                                        child:Text("${cart.cartintem[index].product[index].title}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),),),
                                                       Align(
                                                         alignment : Alignment.topLeft,
-                                                        child:Text("American Trenda",style: TextStyle(fontWeight: FontWeight.bold),),),
+                                                        child:Text("American Trenda",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 10),),),
                                                       Row(
                                                         children: [
                                                           Icon(Icons.star,color: Color(0xFFE99000),),
@@ -654,6 +658,8 @@ class _CheckoutState extends State<Checkout> {
                               if(activeStep>0){
                                 activeStep--;
                                 _pageController.animateToPage(activeStep, curve: Curves.decelerate, duration: Duration(milliseconds: 300));
+                              }else{
+                                Navigator.pop(context);
                               }
                             });
                           },
@@ -695,14 +701,12 @@ class _CheckoutState extends State<Checkout> {
 
                               }
 
+                            }else if(activeStep==2){
+                              history.addtohistory(cart.cartintem);
+                              history.getdate();
+                              cart.deletall();
+                              Navigator.push(context, scaleIn(MainHome()));
                             }
-
-                            //
-                            // if((activeStep<2)){
-                            //   activeStep++;
-                            //   _pageController.animateToPage(activeStep, curve: Curves.decelerate, duration: Duration(milliseconds: 300));
-                            //
-                            // }
                           },
                           child: Container(
                             decoration: BoxDecoration(

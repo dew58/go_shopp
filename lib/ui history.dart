@@ -84,11 +84,12 @@ class _uihistoryState extends State<uihistory> {
         top:10,
         left: MediaQuery.of(context).size.width*0.35,
         child: Column(
-          mainAxisAlignment : MainAxisAlignment.spaceAround,
+          mainAxisAlignment : MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Align(
               alignment : Alignment.topLeft,
-              child:Text("${history.history[index].id}  \t   ${history.date}  ",style: TextStyle(fontWeight: FontWeight.w700,color: Color(0xFF9F94AB),fontSize: 10),),),
+              child:Text("${history.history[index].id}   ${history.dat}  ",style: TextStyle(fontWeight: FontWeight.w700,color: Color(0xFF9F94AB),fontSize: 10),),),
             SizedBox(height: 5,),
             Align(
               alignment : Alignment.topLeft,

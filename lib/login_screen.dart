@@ -28,14 +28,27 @@ class _LoginScreenState extends State<LoginScreen> {
 
   bool logged= false ;
 
+  SharedPreferences? pref2 ;
+
+  String email ="";
+
   setdata (bool log)async{
     pref= await SharedPreferences.getInstance();
     pref!.setBool("login", log);
   }
+
+  setemail(String ema)async{
+    pref2= await SharedPreferences.getInstance();
+    pref2!.setString("email", ema);
+
+  }
   getdata()async{
     pref= await SharedPreferences.getInstance();
+    pref2= await SharedPreferences.getInstance();
+
     setState(() {
       logged =pref!.getBool("login")?? false;
+      email=pref2!.getString("email")?? "";
     });
 
   }
@@ -126,6 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             setState(() {
                               logged =true;
                               setdata(logged);
+                              setemail(emailController.text);
                             });
                             Navigator.push(
                               context,
