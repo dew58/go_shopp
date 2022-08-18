@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_shop/components.dart';
+import 'package:go_shop/register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'home.dart';
@@ -31,17 +32,13 @@ class _LoginScreenState extends State<LoginScreen> {
   SharedPreferences? pref2 ;
 
   String email ="";
+  String password ="";
 
   setdata (bool log)async{
     pref= await SharedPreferences.getInstance();
     pref!.setBool("login", log);
   }
 
-  setemail(String ema)async{
-    pref2= await SharedPreferences.getInstance();
-    pref2!.setString("email", ema);
-
-  }
   getdata()async{
     pref= await SharedPreferences.getInstance();
     pref2= await SharedPreferences.getInstance();
@@ -49,6 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() {
       logged =pref!.getBool("login")?? false;
       email=pref2!.getString("email")?? "";
+      password=pref2!.getString("password")?? "";
     });
 
   }
@@ -131,15 +129,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       defaultTextButton(
                         onPressed: (){
-                          if (!formKey.currentState!.validate()){
+                          if (!formKey.currentState!.validate() || password != passwordController.text || email!=emailController.text){
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Enter Data')),
+                              const SnackBar(content: Text('Enter Correct Data')),
                             );
                           }else{
                             setState(() {
                               logged =true;
                               setdata(logged);
-                              setemail(emailController.text);
                             });
                             Navigator.push(
                               context,
@@ -164,7 +161,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: 50.0,
                       ),
                       defaultTextButton(
-                        onPressed: (){},
+                        onPressed: (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const Register()),
+                          );
+                        },
                         text: 'Register',
                         fontWeight: FontWeight.bold,
                         textColor: Color(0xFFFEFEFE),

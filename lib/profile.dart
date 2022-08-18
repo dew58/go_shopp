@@ -25,7 +25,6 @@ class _profiState extends State<profi> {
 
   String email ="";
 
-
   setemail(String ema)async{
     pref2= await SharedPreferences.getInstance();
     pref2!.setString("email", ema);
