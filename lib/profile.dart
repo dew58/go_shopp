@@ -25,6 +25,7 @@ class _profiState extends State<profi> {
 
   String email ="";
 
+  String name ='';
   setemail(String ema)async{
     pref2= await SharedPreferences.getInstance();
     pref2!.setString("email", ema);
@@ -35,6 +36,7 @@ class _profiState extends State<profi> {
 
     setState(() {
       email=pref2!.getString("email")?? "";
+      name=pref2!.getString("name")?? "";
     });
 
   }
@@ -97,7 +99,7 @@ decoration:BoxDecoration(
 
   child:Column(
    children: [
-   Text("Ahmed Hossam",style: TextStyle(fontWeight: FontWeight.bold,color: Color(0xFFFEFEFE)),),
+   Text("${name}",style: TextStyle(fontWeight: FontWeight.bold,color: Color(0xFFFEFEFE)),),
      SizedBox(height:2 ,),
      Text("${email}",style: TextStyle(color:  Color(0xFFE99000)),),
 ],

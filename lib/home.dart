@@ -91,6 +91,7 @@ class _DrawerState extends State<Drawer> {
 
   String email ="";
 
+  String name ='';
   setdata (bool log)async{
     pref= await SharedPreferences.getInstance();
     pref!.setBool("login", log);
@@ -108,6 +109,7 @@ class _DrawerState extends State<Drawer> {
     setState(() {
       logged =pref!.getBool("login")?? false;
       email=pref2!.getString("email")?? "";
+      name=pref2!.getString("name")?? "";
     });
 
   }
@@ -133,7 +135,7 @@ class _DrawerState extends State<Drawer> {
                 SvgPicture.asset("assets/icons/path-11.svg",color: Color(0xFFE99000),height: 60,width: 60,),
                 Container(
                   margin: EdgeInsets.only(top: 17),
-                  child: Text("Nada Mohmmed",style: TextStyle(color: Color(0xFFFEFEFE),fontSize: 18),textAlign: TextAlign.center,),),
+                  child: Text("${name}",style: TextStyle(color: Color(0xFFFEFEFE),fontSize: 18),textAlign: TextAlign.center,),),
                 Text("${email}",style: TextStyle(color: Color(0xFFE99000),fontSize: 14),textAlign: TextAlign.center,),
               ],
             ),
@@ -598,6 +600,39 @@ class _BodyState extends State<Body> {
         ,)
     ;
   }
+
+  //
+  // Future<void> _displayTextInputDialog(BuildContext context,) async {
+  //   return showDialog(
+  //       context: context,
+  //       builder: (context) {
+  //         return AlertDialog(
+  //           title: Text('select from this category'),
+  //           content:Column(
+  //             children: [
+  //           Checkbox(
+  //           value: this.value,
+  //   onChanged: (var value) {
+  //   setState(() {
+  //   this.value = value;
+  //   });),
+  //             ],
+  //           ) ,
+  //           actions: <Widget>[
+  //             ElevatedButton(
+  //               child: Text('OK'),
+  //               onPressed: () {
+  //                 setState(() {
+  //
+  //                   Navigator.pop(context);
+  //                 });
+  //               },
+  //             ),
+  //
+  //           ],
+  //         );
+  //       });
+  // }
 }
 
 

@@ -374,7 +374,11 @@ class _editprofileState extends State<editprofile> {
                   ],
                 ),
               ),
-              Container(
+              InkWell(
+                onTap: (){
+                  Navigator.pop(context);
+                },
+                child: Container(
                 margin: EdgeInsets.only(top: 130),
                 alignment: AlignmentDirectional.bottomEnd,
                 height: MediaQuery.of(context).size.height*0.06,
@@ -386,7 +390,7 @@ class _editprofileState extends State<editprofile> {
                   color: Color(0xFFE99000),
                 ),
                 child: const Center(child: Text("Save",style: TextStyle(color: Colors.white,fontSize: 17,fontWeight: FontWeight.bold),textAlign: TextAlign.center,)),
-              )
+              ),)
 
             ],
           ),
